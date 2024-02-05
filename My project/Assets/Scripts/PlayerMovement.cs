@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
 
     public MovementState state;
 
+    public bool isWalking;
+
     public enum MovementState
     {
         walking,
@@ -76,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
             playerRB.drag = groundDrag;
         else
             playerRB.drag = 2;
+
+        if(verticalInput !=0 || horizontalInput !=0)
+            isWalking = true;
+        else 
+            isWalking = false;
     }
     
     void MyInput()
