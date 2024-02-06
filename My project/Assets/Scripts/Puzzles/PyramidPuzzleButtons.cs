@@ -12,17 +12,28 @@ public class PyramidPuzzleButtons : MonoBehaviour
     public bool canPressC;
     public bool canPressD;
     public GameObject interactPrompt;
+    public GameObject interactPoint;
+    public PyramidPuzzle puzzle;
 
     public void Update()
     {
         if(canPressA || canPressB || canPressD || canPressC)
         {
             interactPrompt.SetActive(true);
+            interactPoint.SetActive(true);
         }
         else
         {
             interactPrompt.SetActive(false);
+            interactPoint.SetActive(false);
         }
+
+        if(puzzle.rotatingA || puzzle.rotatingB || puzzle.rotatingC || puzzle.rotatingD)
+        {
+            interactPrompt.SetActive(false);
+            interactPoint.SetActive(false);
+        }
+
     }
     public void OnTriggerEnter(Collider other)
     {

@@ -40,11 +40,16 @@ public class PyramidPuzzle : MonoBehaviour
 
     [Header("References")]
     public PyramidPuzzleButtons buttons;
+
+    public Animator animator1;
+    public Animator animator2;
+    public Animator animator3;
+    public Animator animator4;
+
     void Start()
     {
-        canRotate = true;
         buttons = FindObjectOfType<PyramidPuzzleButtons>();
-
+        canRotate = false;
         AComplete = false;
         BComplete = false;
         CComplete = false;
@@ -63,18 +68,22 @@ public class PyramidPuzzle : MonoBehaviour
         {
             rotatingA = true;
         }
+
         if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressB == true)
         {
             rotatingB = true;
         }
+
         if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressC == true)
         {
             rotatingC = true;
         }
+
         if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressD == true)
         {
             rotatingD = true;
         }
+
 
         if (rotatingA == true)
         {
@@ -99,11 +108,13 @@ public class PyramidPuzzle : MonoBehaviour
         if (rotatingC == false)
         {
             canRotate = true;
+
         }
 
         if (rotatingD == true)
         {
             RotateSegD();
+            canRotate = false;
         }
         if (rotatingD == false)
         {
@@ -152,8 +163,6 @@ public class PyramidPuzzle : MonoBehaviour
                 called = true;
             }
         }
-
-      
     }
     public void RotateSegA()
     {
