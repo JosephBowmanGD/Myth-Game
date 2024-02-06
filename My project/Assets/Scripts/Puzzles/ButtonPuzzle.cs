@@ -7,27 +7,18 @@ public class ButtonPuzzleManager : MonoBehaviour
     public bool Button1Pressed;
     public bool Button2Pressed;
     public bool Button3Pressed;
+    public bool Button4Pressed;
+    public bool Button5Pressed;
     public bool WrongButtonPressed;
     public bool called;
-
-    public GameObject button1;
-    public Collider button1collider;
-
-    public GameObject button2;
-    public Collider button2collider;
-
-    public GameObject button3;
-    public Collider button3collider;
-
-    public GameObject inactivebutton;
-    public Collider inactivebuttoncollider;
+    public GameObject[] inactiveButtons;
+    public GameObject[] activeButtons;
+    
 
 
     void Start()
     {
-        button1collider = button1.GetComponent<BoxCollider>();
-        button2collider = button2.GetComponent<BoxCollider>();
-        button3collider = button3.GetComponent<BoxCollider>();
+        
     }
 
 
@@ -37,38 +28,60 @@ public class ButtonPuzzleManager : MonoBehaviour
 
         if (Button1Pressed == true)
         {
-            button1collider.enabled = false;
+            activeButtons[0].GetComponent<BoxCollider>().enabled = false;
         }
         if (Button1Pressed == false)
         {
-            button1collider.enabled = true;
+            activeButtons[0].GetComponent<BoxCollider>().enabled = true; 
         }
 
         if (Button2Pressed == true)
         {
-            button2collider.enabled = false;
+            activeButtons[1].GetComponent<BoxCollider>().enabled = false;
         }
         if (Button2Pressed == false)
         {
-            button2collider.enabled = true;
+            activeButtons[1].GetComponent<BoxCollider>().enabled = true;
         }
 
         if (Button3Pressed == true)
         {
-            button3collider.enabled = false;
+            activeButtons[2].GetComponent<BoxCollider>().enabled = false;
         }
         if (Button3Pressed == false)
         {
-            button3collider.enabled = true;
+            activeButtons[2].GetComponent<BoxCollider>().enabled = true;
+        }
+        if (Button4Pressed == true)
+        {
+            activeButtons[3].GetComponent<BoxCollider>().enabled = false;
+        }
+        if (Button4Pressed == false)
+        {
+            activeButtons[3].GetComponent<BoxCollider>().enabled = true;
+        }
+        if (Button5Pressed == true)
+        {
+            activeButtons[4].GetComponent<BoxCollider>().enabled = false;
+        }
+        if (Button5Pressed == false)
+        {
+            activeButtons[4].GetComponent<BoxCollider>().enabled = true;
         }
 
         if (WrongButtonPressed == true)
         {
-            inactivebuttoncollider.enabled = false;
+            foreach(GameObject obj in inactiveButtons)
+            {
+                obj.GetComponent<BoxCollider>().enabled = false;
+            }
         }
         if (WrongButtonPressed == false)
         {
-            inactivebuttoncollider.enabled = true;
+            foreach (GameObject obj in inactiveButtons)
+            {
+                obj.GetComponent<BoxCollider>().enabled = true;
+            }
         }
     }
 
@@ -76,6 +89,8 @@ public class ButtonPuzzleManager : MonoBehaviour
     {
         Button1Pressed = false;
         Button2Pressed = false;
+        Button3Pressed = false;
+        Button4Pressed = false;
         WrongButtonPressed = false;
     }
     public void OnTriggerEnter(Collider collider)
@@ -94,11 +109,17 @@ public class ButtonPuzzleManager : MonoBehaviour
         if (collider.CompareTag("Act button 3") && Button1Pressed == true && Button2Pressed == true)
         {
             Button3Pressed = true;
-            if (!called)
-            {
-                Debug.Log("Puzzle Complete!");
-                called = true;
-            }
+            Debug.Log("Button 3 pressed success");
+        }
+        if (collider.CompareTag("Act Button4") && Button1Pressed == true && Button2Pressed == true && Button3Pressed)
+        {
+            Button4Pressed = true;
+            Debug.Log("Button 4 pressed success");
+        }
+        if (collider.CompareTag("Act Button 5") && Button1Pressed == true && Button2Pressed == true && Button3Pressed && Button4Pressed)
+        {
+            Button5Pressed = true;
+            Debug.Log("Puzzle Complete!");
         }
         if (collider.CompareTag("InAct Button"))
         {

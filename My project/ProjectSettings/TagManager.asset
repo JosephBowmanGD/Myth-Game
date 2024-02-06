@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InAct Button
+  - Act Button 2
+  - Act button 3
+  - PbutB
+  - PbutT
+  - Act Button 1
+  - PbutM
+  - Act Button4
+  - Act Button 5
+  - PbutC
   layers:
   - Default
   - TransparentFX

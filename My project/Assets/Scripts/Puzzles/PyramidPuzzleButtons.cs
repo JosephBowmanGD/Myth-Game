@@ -7,14 +7,15 @@ using TMPro;
 public class PyramidPuzzleButtons : MonoBehaviour
 {
     
+    public bool canPressA;
     public bool canPressB;
-    public bool canPressM;
-    public bool canPressT;
+    public bool canPressC;
+    public bool canPressD;
     public GameObject interactPrompt;
 
     public void Update()
     {
-        if(canPressB || canPressM || canPressT)
+        if(canPressA || canPressB || canPressD || canPressC)
         {
             interactPrompt.SetActive(true);
         }
@@ -27,30 +28,38 @@ public class PyramidPuzzleButtons : MonoBehaviour
     {
         if (other.CompareTag("PbutB"))
         {
-            canPressB = true;
+            canPressA = true;
         }
         if (other.CompareTag("PbutM"))
         {
-            canPressM = true;
+            canPressB = true;
+        }
+        if (other.CompareTag("PbutC"))
+        {
+            canPressC = true;
         }
         if (other.CompareTag("PbutT"))
         {
-            canPressT = true;
+            canPressD = true;
         }
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("PbutB"))
         {
-            canPressB = false;
+            canPressA = false;
         }
         if (other.CompareTag("PbutM"))
         {
-            canPressM = false;
+            canPressB = false;
+        }
+        if (other.CompareTag("PbutC"))
+        {
+            canPressC = false;
         }
         if (other.CompareTag("PbutT"))
         {
-            canPressT = false;
+            canPressD = false;
         }
     }
 

@@ -9,29 +9,34 @@ public class PyramidPuzzle : MonoBehaviour
 
     [Header("Rotation Values")]
     public float rotationSpeed;
+    public float rotateAngleA;
     public float rotateAngleB;
-    public float rotateAngleM;
-    public float rotateAngleT;
+    public float rotateAngleC;
+    public float rotateAngleD;
+    public float currRotationA;
     public float currRotationB;
-    public float currRotationM;
-    public float currRotationT;
+    public float currRotationC;
+    public float currRotationD;
 
     [Header("Rotation Bools")]
+    public bool rotatingA;
     public bool rotatingB;
-    public bool rotatingM;
-    public bool rotatingT;
+    public bool rotatingC;
+    public bool rotatingD;
     public bool canRotate;
 
     [Header("Complete Conditions")]
-    public bool bottomComplete;
-    public bool midComplete;
-    public bool topComplete;
+    public bool AComplete;
+    public bool BComplete;
+    public bool CComplete;
+    public bool DComplete;
     public bool called;
 
     [Header("Segments")]
+    public GameObject SegA;
     public GameObject SegB;
-    public GameObject SegM;
-    public GameObject SegT;
+    public GameObject SegC;
+    public GameObject SegD;
 
     [Header("References")]
     public PyramidPuzzleButtons buttons;
@@ -40,84 +45,106 @@ public class PyramidPuzzle : MonoBehaviour
         canRotate = true;
         buttons = FindObjectOfType<PyramidPuzzleButtons>();
 
-        bottomComplete = false;
-        midComplete = false;
-        topComplete = false;
+        AComplete = false;
+        BComplete = false;
+        CComplete = false;
+        DComplete = false;
     }
     void Update()
     {
+        currRotationA = SegA.transform.rotation.eulerAngles.y;
         currRotationB = SegB.transform.rotation.eulerAngles.y;
-        currRotationM = SegM.transform.rotation.eulerAngles.y;
-        currRotationT = SegT.transform.rotation.eulerAngles.y;
+        currRotationC = SegC.transform.rotation.eulerAngles.y;
+        currRotationD = SegD.transform.rotation.eulerAngles.y;
+        
 
         // rotations
+        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressA == true)
+        {
+            rotatingA = true;
+        }
         if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressB == true)
         {
             rotatingB = true;
         }
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressM == true)
+        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressC == true)
         {
-            rotatingM = true;
+            rotatingC = true;
         }
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressT == true)
+        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressD == true)
         {
-            rotatingT = true;
+            rotatingD = true;
         }
 
+        if (rotatingA == true)
+        {
+            RotateSegA();
+        }
+        if(rotatingA == false)
+        {
+            canRotate = true;
+        }
         if (rotatingB == true)
         {
-            RotateSegBot();
+            RotateSegB();
         }
-        if(rotatingB == false)
+        if (rotatingB == false)
+        {
+            canRotate = true;
+        }
+        if (rotatingC == true)
+        {
+            RotateSegC();
+        }
+        if (rotatingC == false)
         {
             canRotate = true;
         }
 
-        if (rotatingM == true)
+        if (rotatingD == true)
         {
-            RotateSegMid();
+            RotateSegD();
         }
-        if (rotatingM == false)
-        {
-            canRotate = true;
-        }
-
-        if (rotatingT == true)
-        {
-            RotateSegTop();
-        }
-        if (rotatingT == false)
+        if (rotatingD == false)
         {
             canRotate = true;
         }
         
         //complete conditions
+        if (currRotationA > 89 && currRotationA < 91)
+        {
+            AComplete = true;
+        }
+        else
+        {
+            AComplete = false;
+        }
         if (currRotationB > 89 && currRotationB < 91)
         {
-            bottomComplete = true;
+            BComplete = true;
         }
         else
         {
-            bottomComplete = false;
+            BComplete = false;
         }
-        if (currRotationM > 269 && currRotationM < 271)
+        if (currRotationC > 89 && currRotationC < 91)
         {
-            midComplete = true;
-        }
-        else
-        {
-            midComplete = false;
-        }
-        if (currRotationT > 179 && currRotationT < 181)
-        {
-            topComplete = true;
+            CComplete = true;
         }
         else
         {
-            topComplete = false;
+            DComplete = false;
+        }
+        if (currRotationD > 89 && currRotationD < 91)
+        {
+            DComplete = true;
+        }
+        else
+        {
+            DComplete = false;
         }
 
-        if(bottomComplete && midComplete && topComplete)
+        if(AComplete && BComplete && CComplete && DComplete)
         {
             if (!called)
             {
@@ -128,45 +155,58 @@ public class PyramidPuzzle : MonoBehaviour
 
       
     }
-    public void RotateSegBot()
+    public void RotateSegA()
     {
-        Quaternion targetRotationB = Quaternion.Euler(0, rotateAngleB, 0);
+        Quaternion targetRotationB = Quaternion.Euler(0, rotateAngleA, 0);
 
-        SegB.transform.rotation = Quaternion.Slerp(SegB.transform.rotation, targetRotationB, rotationSpeed * Time.deltaTime);
+        SegA.transform.rotation = Quaternion.Slerp(SegA.transform.rotation, targetRotationB, rotationSpeed * Time.deltaTime);
 
-        if(SegB.transform.rotation == targetRotationB)
+        if(SegA.transform.rotation == targetRotationB)
+        {
+            canRotate = false;
+            rotatingA = false;
+            rotateAngleA -= 90;
+        }
+    }
+    public void RotateSegB()
+    {
+        Quaternion targetRotationM = Quaternion.Euler(0, rotateAngleB, 0);
+
+        SegB.transform.rotation = Quaternion.Slerp(SegB.transform.rotation, targetRotationM, rotationSpeed * Time.deltaTime);
+
+
+
+        if (SegB.transform.rotation == targetRotationM)
         {
             canRotate = false;
             rotatingB = false;
             rotateAngleB += 90;
         }
     }
-    public void RotateSegMid()
+    public void RotateSegC()
     {
-        Quaternion targetRotationM = Quaternion.Euler(0, rotateAngleM, 0);
+        Quaternion targetRotationC = Quaternion.Euler(0, rotateAngleC, 0);
 
-        SegM.transform.rotation = Quaternion.Slerp(SegM.transform.rotation, targetRotationM, rotationSpeed * Time.deltaTime);
+        SegC.transform.rotation = Quaternion.Slerp(SegC.transform.rotation, targetRotationC, rotationSpeed * Time.deltaTime);
 
-
-
-        if (SegM.transform.rotation == targetRotationM)
+        if (SegC.transform.rotation == targetRotationC)
         {
             canRotate = false;
-            rotatingM = false;
-            rotateAngleM -= 90;
+            rotatingC = false;
+            rotateAngleC -= 90;
         }
     }
-    public void RotateSegTop()
+    public void RotateSegD()
     {
-        Quaternion targetRotationT = Quaternion.Euler(0, rotateAngleT, 0);
+        Quaternion targetRotationT = Quaternion.Euler(0, rotateAngleD, 0);
 
-        SegT.transform.rotation = Quaternion.Slerp(SegT.transform.rotation, targetRotationT, rotationSpeed * Time.deltaTime);
+        SegD.transform.rotation = Quaternion.Slerp(SegD.transform.rotation, targetRotationT, rotationSpeed * Time.deltaTime);
 
-        if (SegT.transform.rotation == targetRotationT)
+        if (SegD.transform.rotation == targetRotationT)
         {
             canRotate = false;
-            rotatingT = false;
-            rotateAngleT += 90;
+            rotatingD = false;
+            rotateAngleD += 90;
         }
     }
     public void Complete()
