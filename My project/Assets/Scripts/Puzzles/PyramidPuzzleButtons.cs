@@ -28,7 +28,7 @@ public class PyramidPuzzleButtons : MonoBehaviour
             interactPoint.SetActive(false);
         }
 
-        if(puzzle.rotatingA || puzzle.rotatingB || puzzle.rotatingC || puzzle.rotatingD)
+        if(puzzle.canInput)
         {
             interactPrompt.SetActive(false);
             interactPoint.SetActive(false);

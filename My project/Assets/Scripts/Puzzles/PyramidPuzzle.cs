@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,13 +24,8 @@ public class PyramidPuzzle : MonoBehaviour
     public bool rotatingB;
     public bool rotatingC;
     public bool rotatingD;
-    public bool canRotate;
 
     [Header("Complete Conditions")]
-    public bool AComplete;
-    public bool BComplete;
-    public bool CComplete;
-    public bool DComplete;
     public bool called;
 
     [Header("Segments")]
@@ -46,116 +42,68 @@ public class PyramidPuzzle : MonoBehaviour
     public Animator animator3;
     public Animator animator4;
 
+    public bool canInput;
+
     void Start()
     {
         buttons = FindObjectOfType<PyramidPuzzleButtons>();
-        canRotate = false;
-        AComplete = false;
-        BComplete = false;
-        CComplete = false;
-        DComplete = false;
     }
+
     void Update()
     {
         currRotationA = SegA.transform.rotation.eulerAngles.y;
         currRotationB = SegB.transform.rotation.eulerAngles.y;
         currRotationC = SegC.transform.rotation.eulerAngles.y;
         currRotationD = SegD.transform.rotation.eulerAngles.y;
-        
 
         // rotations
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressA == true)
+        if(canInput)
         {
-            rotatingA = true;
+            if (Input.GetKeyDown(input) && buttons.canPressA == true)
+            {
+                rotatingA = true;
+                animator1.SetBool("Should Start", true);
+                Invoke(nameof(ResetAnimator), 0.8f);
+            }
+            if (Input.GetKeyDown(input) && buttons.canPressB == true)
+            {
+                rotatingB = true;
+                animator2.SetBool("Should Start", true);
+                Invoke(nameof(ResetAnimator), 0.8f);
+            }
+            if (Input.GetKeyDown(input) && buttons.canPressC == true)
+            {
+                rotatingC = true;
+                animator3.SetBool("Should Start", true);
+                Invoke(nameof(ResetAnimator), 0.8f);
+            }
+            if (Input.GetKeyDown(input) && buttons.canPressD == true)
+            {
+                rotatingD = true;
+                animator4.SetBool("Should Start", true);
+                Invoke(nameof(ResetAnimator), 0.8f);
+            }
         }
-
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressB == true)
-        {
-            rotatingB = true;
-        }
-
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressC == true)
-        {
-            rotatingC = true;
-        }
-
-        if (Input.GetKeyDown(input) && canRotate == true && buttons.canPressD == true)
-        {
-            rotatingD = true;
-        }
-
 
         if (rotatingA == true)
         {
             RotateSegA();
         }
-        if(rotatingA == false)
-        {
-            canRotate = true;
-        }
         if (rotatingB == true)
         {
             RotateSegB();
-        }
-        if (rotatingB == false)
-        {
-            canRotate = true;
         }
         if (rotatingC == true)
         {
             RotateSegC();
         }
-        if (rotatingC == false)
-        {
-            canRotate = true;
-
-        }
-
         if (rotatingD == true)
         {
             RotateSegD();
-            canRotate = false;
-        }
-        if (rotatingD == false)
-        {
-            canRotate = true;
         }
         
         //complete conditions
-        if (currRotationA > 89 && currRotationA < 91)
-        {
-            AComplete = true;
-        }
-        else
-        {
-            AComplete = false;
-        }
-        if (currRotationB > 89 && currRotationB < 91)
-        {
-            BComplete = true;
-        }
-        else
-        {
-            BComplete = false;
-        }
-        if (currRotationC > 89 && currRotationC < 91)
-        {
-            CComplete = true;
-        }
-        else
-        {
-            DComplete = false;
-        }
-        if (currRotationD > 89 && currRotationD < 91)
-        {
-            DComplete = true;
-        }
-        else
-        {
-            DComplete = false;
-        }
-
-        if(AComplete && BComplete && CComplete && DComplete)
+        if (currRotationA > 89 && currRotationA < 91 && currRotationB > 89 && currRotationB < 91 && currRotationC > 89 && currRotationC < 91 && currRotationD > 89 && currRotationD < 91)
         {
             if (!called)
             {
@@ -163,7 +111,13 @@ public class PyramidPuzzle : MonoBehaviour
                 called = true;
             }
         }
+
+        if (rotatingA || rotatingB || rotatingC || rotatingD)
+            canInput = false;
+        else
+            canInput = true;
     }
+
     public void RotateSegA()
     {
         Quaternion targetRotationB = Quaternion.Euler(0, rotateAngleA, 0);
@@ -172,22 +126,19 @@ public class PyramidPuzzle : MonoBehaviour
 
         if(SegA.transform.rotation == targetRotationB)
         {
-            canRotate = false;
             rotatingA = false;
             rotateAngleA -= 90;
         }
     }
+
     public void RotateSegB()
     {
         Quaternion targetRotationM = Quaternion.Euler(0, rotateAngleB, 0);
 
         SegB.transform.rotation = Quaternion.Slerp(SegB.transform.rotation, targetRotationM, rotationSpeed * Time.deltaTime);
 
-
-
         if (SegB.transform.rotation == targetRotationM)
         {
-            canRotate = false;
             rotatingB = false;
             rotateAngleB += 90;
         }
@@ -200,11 +151,11 @@ public class PyramidPuzzle : MonoBehaviour
 
         if (SegC.transform.rotation == targetRotationC)
         {
-            canRotate = false;
             rotatingC = false;
             rotateAngleC -= 90;
         }
     }
+
     public void RotateSegD()
     {
         Quaternion targetRotationT = Quaternion.Euler(0, rotateAngleD, 0);
@@ -213,7 +164,6 @@ public class PyramidPuzzle : MonoBehaviour
 
         if (SegD.transform.rotation == targetRotationT)
         {
-            canRotate = false;
             rotatingD = false;
             rotateAngleD += 90;
         }
@@ -221,5 +171,17 @@ public class PyramidPuzzle : MonoBehaviour
     public void Complete()
     {
         Debug.Log("Puzzle Complete!");
+    }
+
+    public void ResetAnimator()
+    {
+            animator1.SetBool("Should End", true);
+            animator1.SetBool("Should Start", false);
+            animator2.SetBool("Should End", true);
+            animator2.SetBool("Should Start", false);
+            animator3.SetBool("Should End", true);
+            animator3.SetBool("Should Start", false);
+            animator4.SetBool("Should End", true);
+            animator4.SetBool("Should Start", false);
     }
 }
