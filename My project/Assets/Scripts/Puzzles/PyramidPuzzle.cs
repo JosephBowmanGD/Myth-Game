@@ -47,6 +47,8 @@ public class PyramidPuzzle : MonoBehaviour
 
 
     public bool canInput;
+    public GameObject rockSlide;
+    public GameObject buttonDown;
 
     void Start()
     {
@@ -61,49 +63,57 @@ public class PyramidPuzzle : MonoBehaviour
         currRotationD = SegD.transform.rotation.eulerAngles.y;
 
         // rotations
-        if(canInput)
+        if(canInput && !called)
         {
             if (Input.GetKeyDown(input) && buttons.canPressA == true)
             {
                 rotatingA = true;
                 animator1.SetBool("Should Start", true);
                 Invoke(nameof(ResetAnimator), 0.8f);
+                buttonDown.SetActive(true);
             }
             if (Input.GetKeyDown(input) && buttons.canPressB == true)
             {
                 rotatingB = true;
                 animator2.SetBool("Should Start", true);
                 Invoke(nameof(ResetAnimator), 0.8f);
+                buttonDown.SetActive(true);
             }
             if (Input.GetKeyDown(input) && buttons.canPressC == true)
             {
                 rotatingC = true;
                 animator3.SetBool("Should Start", true);
                 Invoke(nameof(ResetAnimator), 0.8f);
+                buttonDown.SetActive(true);
             }
             if (Input.GetKeyDown(input) && buttons.canPressD == true)
             {
                 rotatingD = true;
                 animator4.SetBool("Should Start", true);
                 Invoke(nameof(ResetAnimator), 0.8f);
+                buttonDown.SetActive(true);
             }
         }
 
         if (rotatingA == true)
         {
             RotateSegA();
+            rockSlide.SetActive(true);
         }
         if (rotatingB == true)
         {
             RotateSegB();
+            rockSlide.SetActive(true);
         }
         if (rotatingC == true)
         {
             RotateSegC();
+            rockSlide.SetActive(true);
         }
         if (rotatingD == true)
         {
             RotateSegD();
+            rockSlide.SetActive(true);
         }
         
         //complete conditions
@@ -119,7 +129,11 @@ public class PyramidPuzzle : MonoBehaviour
         if (rotatingA || rotatingB || rotatingC || rotatingD)
             canInput = false;
         else
+        {
             canInput = true;
+            rockSlide.SetActive(false);
+            buttonDown.SetActive(false);
+        }
     }
 
     public void RotateSegA()
