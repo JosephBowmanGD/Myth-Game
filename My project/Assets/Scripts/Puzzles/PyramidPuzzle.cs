@@ -42,6 +42,10 @@ public class PyramidPuzzle : MonoBehaviour
     public Animator animator3;
     public Animator animator4;
 
+    public Animator lid;
+    public Animator platform;
+
+
     public bool canInput;
 
     void Start()
@@ -171,6 +175,8 @@ public class PyramidPuzzle : MonoBehaviour
     public void Complete()
     {
         Debug.Log("Puzzle Complete!");
+        lid.Play("Open");
+        platform.Play("SlideUp");
     }
 
     public void ResetAnimator()
