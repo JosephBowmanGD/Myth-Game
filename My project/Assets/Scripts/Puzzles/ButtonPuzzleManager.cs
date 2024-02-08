@@ -15,6 +15,7 @@ public class ButtonPuzzleManager : MonoBehaviour
     public GameObject ButtonUp;
     public GameObject[] inactiveButtons;
     public GameObject[] activeButtons;
+    public bool isSet;
 
     void Update()
     {
@@ -88,6 +89,7 @@ public class ButtonPuzzleManager : MonoBehaviour
         Button4Pressed = false;
         WrongButtonPressed = false;
         ButtonUp.SetActive(true);
+        isSet = true;
     }
 
     public void OnTriggerEnter(Collider collider)
