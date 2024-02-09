@@ -20,6 +20,9 @@ public class ButtonPuzzleManager : MonoBehaviour
     [HideInInspector]
     public bool isComplete;
 
+    public Animator doorRight;
+    public Animator doorLeft;
+
     void Update()
     {
         if (Button1Pressed == true)
@@ -157,5 +160,7 @@ public class ButtonPuzzleManager : MonoBehaviour
     {
         Debug.Log("Puzzle Complete!");
         isComplete = true;
+        doorRight.SetBool("isComplete", true);
+        doorLeft.SetBool("isComplete", true);
     }
 }
