@@ -15,7 +15,10 @@ public class ButtonPuzzleManager : MonoBehaviour
     public GameObject ButtonUp;
     public GameObject[] inactiveButtons;
     public GameObject[] activeButtons;
+    [HideInInspector]
     public bool isSet;
+    [HideInInspector]
+    public bool isComplete;
 
     void Update()
     {
@@ -127,7 +130,7 @@ public class ButtonPuzzleManager : MonoBehaviour
             Button5Pressed = true;
             Invoke(nameof(DisableAudio), 0.3f);
             ButtonDown.SetActive(true);
-            Debug.Log("Puzzle Complete!");
+            PuzzleComplete();
         }
         if (collider.CompareTag("InAct Button") && Button1Pressed)
         {
@@ -148,5 +151,11 @@ public class ButtonPuzzleManager : MonoBehaviour
     void DisableAudio()
     {
         ButtonDown.SetActive(false);
+    }
+
+    void PuzzleComplete()
+    {
+        Debug.Log("Puzzle Complete!");
+        isComplete = true;
     }
 }

@@ -27,40 +27,46 @@ public class ButtonAnimation : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if(PuzzleManager.isComplete == false)
         {
-            if(is1)
-                buttonAnimator.Play("Down1");
-            else if (is2)
-                buttonAnimator.Play("Down2");
-            else if(is3)
-                buttonAnimator.Play("Down3");
-            else if(is4)
-                buttonAnimator.Play("Down4");
-            else if(is5)
-                buttonAnimator.Play("Down5");
-            else if(is6)
-                buttonAnimator.Play("Down6");
-            else if(is7)
-                buttonAnimator.Play("Down7");
-            else if(is8)
-                buttonAnimator.Play("Down8");
-            else if(is9)
-                buttonAnimator.Play("Down9");
-            else if(is10)
-                buttonAnimator.Play("Down10");
-            else if(is11)
-                buttonAnimator.Play("Down11");
-            else if(is12)
-                buttonAnimator.Play("Down12");
+            if (other.CompareTag("Player"))
+            {
+                if(is1)
+                    buttonAnimator.Play("Down1");
+                else if (is2)
+                    buttonAnimator.Play("Down2");
+                else if(is3)
+                    buttonAnimator.Play("Down3");
+                else if(is4)
+                    buttonAnimator.Play("Down4");
+                else if(is5)
+                    buttonAnimator.Play("Down5");
+                else if(is6)
+                    buttonAnimator.Play("Down6");
+                else if(is7)
+                    buttonAnimator.Play("Down7");
+                else if(is8)
+                    buttonAnimator.Play("Down8");
+                else if(is9)
+                    buttonAnimator.Play("Down9");
+                else if(is10)
+                    buttonAnimator.Play("Down10");
+                else if(is11)
+                    buttonAnimator.Play("Down11");
+                else if(is12)
+                    buttonAnimator.Play("Down12");
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (PuzzleManager.isComplete == false)
         {
-            buttonAnimator.SetBool("Reset", true);
+            if (other.CompareTag("Player"))
+            {
+                buttonAnimator.SetBool("Reset", true);
+            }
         }
     }
 
