@@ -2591,7 +2591,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
+  sharedProfile: {fileID: 11400000, guid: ea265a425e437234fb7cfb90ac2d00d3, type: 2}
 --- !u!4 &832575519
 Transform:
   m_ObjectHideFlags: 0
@@ -5962,6 +5962,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6484873397310951059, guid: 96d3ba08f2c9fb04ebe82763d9858972,
         type: 3}
+      propertyPath: sensX
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6484873397310951059, guid: 96d3ba08f2c9fb04ebe82763d9858972,
+        type: 3}
+      propertyPath: sensY
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6484873397310951059, guid: 96d3ba08f2c9fb04ebe82763d9858972,
+        type: 3}
       propertyPath: playerOrientation
       value: 
       objectReference: {fileID: 1374692598}
@@ -5970,6 +5980,16 @@ PrefabInstance:
       propertyPath: cameraPos
       value: 
       objectReference: {fileID: 2057383160}
+    - target: {fileID: 7476957932508553188, guid: 96d3ba08f2c9fb04ebe82763d9858972,
+        type: 3}
+      propertyPath: m_Dithering
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476957932508553188, guid: 96d3ba08f2c9fb04ebe82763d9858972,
+        type: 3}
+      propertyPath: m_Antialiasing
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
