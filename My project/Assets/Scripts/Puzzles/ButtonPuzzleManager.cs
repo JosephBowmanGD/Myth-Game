@@ -131,8 +131,8 @@ public class ButtonPuzzleManager : MonoBehaviour
         if (collider.CompareTag("Act Button 5") && Button1Pressed == true && Button2Pressed == true && Button3Pressed && Button4Pressed)
         {
             Button5Pressed = true;
-            Invoke(nameof(DisableAudio), 0.3f);
             ButtonDown.SetActive(true);
+            Invoke(nameof(DisableAudio), 0.3f);
             PuzzleComplete();
         }
         if (collider.CompareTag("InAct Button") && Button1Pressed)

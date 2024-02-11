@@ -98,22 +98,18 @@ public class PyramidPuzzle : MonoBehaviour
         if (rotatingA == true)
         {
             RotateSegA();
-            rockSlide.SetActive(true);
         }
         if (rotatingB == true)
         {
             RotateSegB();
-            rockSlide.SetActive(true);
         }
         if (rotatingC == true)
         {
             RotateSegC();
-            rockSlide.SetActive(true);
         }
         if (rotatingD == true)
         {
             RotateSegD();
-            rockSlide.SetActive(true);
         }
         
         //complete conditions
@@ -127,7 +123,10 @@ public class PyramidPuzzle : MonoBehaviour
         }
 
         if (rotatingA || rotatingB || rotatingC || rotatingD)
+        {
             canInput = false;
+            rockSlide.SetActive(true);
+        }
         else
         {
             canInput = true;
