@@ -33,7 +33,29 @@ public class PaintingPuzzle : MonoBehaviour
     public int currIndex5;
     public int prevIndex5;
 
+    [Header("Animators")]
+    public Animator B1Anim;
+    public Animator B2Anim;
+    public Animator B3Anim;
+    public Animator B4Anim;
+    public Animator B5Anim;
+
     private bool called;
+    public bool canPress;
+
+    [Header("Sound")]
+    public GameObject SlideSound;
+
+    [Header("E to Interact Text")]
+    public GameObject interactText;
+
+    [Header("Button Bools")]
+    public bool canPress1;
+    public bool canPress2;
+    public bool canPress3;
+    public bool canPress4;
+    public bool canPress5;
+    public bool hasIntereactedWith5; //bug fix//
     void Start()
     {
         currIndex1 = 0;
@@ -41,31 +63,47 @@ public class PaintingPuzzle : MonoBehaviour
         currIndex3 = 0;
         currIndex4 = 0;
         currIndex5 = 0;
+
         called = false;
+        canPress = true;
+        hasIntereactedWith5 = false;
+
+        SlideSound.SetActive(false);
     }
 
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !called)
+        if (Input.GetKeyDown(KeyCode.E) && !called && canPress1 && canPress)
         {
             ShiftPainting1();
+            SlideSound.SetActive(true);
+            Invoke(nameof(SoundOff), 1.5f);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !called)
+        if (Input.GetKeyDown(KeyCode.E) && !called && canPress2 && canPress)
         {
             ShiftPainting2();
+            SlideSound.SetActive(true);
+            Invoke(nameof(SoundOff), 1.5f);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !called )
+        if (Input.GetKeyDown(KeyCode.E) && !called && canPress3 && canPress)
         {
             ShiftPainting3();
+            SlideSound.SetActive(true);
+            Invoke(nameof(SoundOff), 1.5f);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && !called)
+        if (Input.GetKeyDown(KeyCode.E) && !called && canPress4 && canPress)
         {
             ShiftPainting4();
+            SlideSound.SetActive(true);
+            Invoke(nameof(SoundOff), 1.5f);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5) && !called)
+        if (Input.GetKeyDown(KeyCode.E) && !called && canPress5 && canPress)
         {
             ShiftPainting5();
+            hasIntereactedWith5 = true;
+            SlideSound.SetActive(true);
+            Invoke(nameof(SoundOff), 1.5f);
         }
 
         if (currIndex1 >= 5)
@@ -96,7 +134,7 @@ public class PaintingPuzzle : MonoBehaviour
         prevIndex5 = currIndex5 - 1;
 
         //puzzle completion
-        if(currIndex1 == 1 && currIndex2 == 2 && currIndex3 == 3 && currIndex4 == 4 && currIndex5 == 0)
+        if(currIndex1 == 1 && currIndex2 == 2 && currIndex3 == 3 && currIndex4 == 4 && currIndex5 == 0 && hasIntereactedWith5)
         {
             if (!called)
             {
@@ -104,13 +142,30 @@ public class PaintingPuzzle : MonoBehaviour
                 called = true;
             }
         }
+
+        if(canPress1 || canPress2 || canPress3 || canPress4 || canPress5)
+        {
+            interactText.SetActive(true);
+        }
+        else
+        {
+            interactText.SetActive(false);
+        }
+
+        if (called)
+        {
+            interactText.SetActive(false);
+        }
     }
 
     public void ShiftPainting1()
     {
         Destroy(clonedPainting1);
         Debug.Log("Destroyed");
-
+        B1Anim.SetBool("Button1Pressed", true);
+        Invoke(nameof(ResetAnimations), 0.8f);
+        canPress = false;
+        Invoke(nameof(PressReset), 0.4f);
 
         if (prevIndex1 == -1)
         {
@@ -148,7 +203,10 @@ public class PaintingPuzzle : MonoBehaviour
     {
         Destroy(clonedPainting2);
         Debug.Log("Destroyed");
-
+        B2Anim.SetBool("Button2Pressed", true);
+        Invoke(nameof(ResetAnimations), 0.4f);
+        canPress = false;
+        Invoke(nameof(PressReset), 0.4f);
 
         if (prevIndex2 == -1)
         {
@@ -186,7 +244,10 @@ public class PaintingPuzzle : MonoBehaviour
     {
         Destroy(clonedPainting3);
         Debug.Log("Destroyed");
-
+        B3Anim.SetBool("Button3Pressed", true);
+        Invoke(nameof(ResetAnimations), 0.4f);
+        canPress = false;
+        Invoke(nameof(PressReset), 0.4f);
 
         if (prevIndex3 == -1)
         {
@@ -224,7 +285,10 @@ public class PaintingPuzzle : MonoBehaviour
     {
         Destroy(clonedPainting4);
         Debug.Log("Destroyed");
-
+        B4Anim.SetBool("Button4Pressed", true);
+        Invoke(nameof(ResetAnimations), 0.4f);
+        canPress = false;
+        Invoke(nameof(PressReset), 0.4f);
 
         if (prevIndex4 == -1)
         {
@@ -261,7 +325,10 @@ public class PaintingPuzzle : MonoBehaviour
     {
         Destroy(clonedPainting5);
         Debug.Log("Destroyed");
-
+        B5Anim.SetBool("Button5Pressed", true);
+        Invoke(nameof(ResetAnimations), 0.4f);
+        canPress = false;
+        Invoke(nameof(PressReset), 0.4f);
 
         if (prevIndex5 == -1)
         {
@@ -292,6 +359,72 @@ public class PaintingPuzzle : MonoBehaviour
             clonedPainting5 = Instantiate(Paintings[4], painting5Pos.position, painting5Pos.rotation);
             currIndex5 += 1;
             Debug.Log("Created Painting 5");
+        }
+    }
+
+    public void ResetAnimations()
+    {
+        B1Anim.SetBool("Button1Pressed", false);
+        B2Anim.SetBool("Button2Pressed", false);
+        B3Anim.SetBool("Button3Pressed", false);
+        B4Anim.SetBool("Button4Pressed", false);
+        B5Anim.SetBool("Button5Pressed", false);
+    }
+
+    public void PressReset()
+    {
+        canPress = true;
+    }
+    public void SoundOff()
+    {
+        SlideSound.SetActive(false);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PaintB1"))
+        {
+            canPress1 = true;
+        }
+        if (other.CompareTag("PaintB2"))
+        {
+            canPress2 = true;
+        }
+        if (other.CompareTag("PaintB3"))
+        {
+            canPress3 = true;
+        }
+        if (other.CompareTag("PaintB4"))
+        {
+            canPress4 = true;
+        }
+        if (other.CompareTag("PaintB5"))
+        {
+            canPress5 = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PaintB1"))
+        {
+            canPress1 = false;
+        }
+        if (other.CompareTag("PaintB2"))
+        {
+            canPress2 = false;
+        }
+        if (other.CompareTag("PaintB3"))
+        {
+            canPress3 = false;
+        }
+        if (other.CompareTag("PaintB4"))
+        {
+            canPress4 = false;
+        }
+        if (other.CompareTag("PaintB5"))
+        {
+            canPress5 = false;
         }
     }
     public void PuzzleCompletion()

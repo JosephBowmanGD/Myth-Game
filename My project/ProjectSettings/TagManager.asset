@@ -14,6 +14,11 @@ TagManager:
   - Act Button4
   - Act Button 5
   - PbutC
+  - PaintB1
+  - PaintB2
+  - PaintB3
+  - PaintB4
+  - PaintB5
   layers:
   - Default
   - TransparentFX
