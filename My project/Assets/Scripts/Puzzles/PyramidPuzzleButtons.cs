@@ -12,7 +12,6 @@ public class PyramidPuzzleButtons : MonoBehaviour
     public bool canPressC;
     public bool canPressD;
     public GameObject interactPrompt;
-    public GameObject interactPoint;
     public PyramidPuzzle puzzle;
 
     public void Update()
@@ -20,18 +19,15 @@ public class PyramidPuzzleButtons : MonoBehaviour
         if(canPressA || canPressB || canPressD || canPressC)
         {
             interactPrompt.SetActive(true);
-            interactPoint.SetActive(true);
         }
         else
         {
             interactPrompt.SetActive(false);
-            interactPoint.SetActive(false);
         }
 
         if(puzzle.canInput == false || puzzle.called)
         {
             interactPrompt.SetActive(false);
-            interactPoint.SetActive(false);
         }
 
     }

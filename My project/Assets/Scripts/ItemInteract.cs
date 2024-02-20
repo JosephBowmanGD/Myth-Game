@@ -17,6 +17,7 @@ public class ItemInteract : MonoBehaviour
         UIItemDes.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
         if (count == 1)
             UI.one = true;
         else if(count == 2)
