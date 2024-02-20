@@ -1,6 +1,8 @@
 using System.Collections;
+using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PyramidPuzzle : MonoBehaviour
@@ -41,6 +43,7 @@ public class PyramidPuzzle : MonoBehaviour
     public Animator animator2;
     public Animator animator3;
     public Animator animator4;
+    public Animator ItemAnim;
 
     public Animator lid;
     public Animator platform;
@@ -48,7 +51,12 @@ public class PyramidPuzzle : MonoBehaviour
 
     public bool canInput;
     public GameObject rockSlide;
+    public GameObject doorSlide;
     public GameObject buttonDown;
+    public Animator doorRight;
+    public Animator doorLeft;
+
+    public TextMeshProUGUI text;
 
     void Start()
     {
@@ -187,12 +195,21 @@ public class PyramidPuzzle : MonoBehaviour
     }
     public void Complete()
     {
-        Debug.Log("Puzzle Complete!");
         lid.Play("Open");
         platform.Play("SlideUp");
+        doorSlide.SetActive(true);
+        Invoke(nameof(SetObject), 2f);
+        doorRight.SetBool("isComplete", true);
+        doorLeft.SetBool("isComplete", true);
+        text.text = ("Puzzles Completed" + " " + " 2/3");
+        ItemAnim.Play("Rise");
+    }
+    void SetObject()
+    {
+        doorSlide.SetActive(false);
     }
 
-    public void ResetAnimator()
+public void ResetAnimator()
     {
             animator1.SetBool("Should End", true);
             animator1.SetBool("Should Start", false);

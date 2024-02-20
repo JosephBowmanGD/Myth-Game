@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ButtonPuzzleManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ButtonPuzzleManager : MonoBehaviour
     public bool Button4Pressed;
     public bool Button5Pressed;
     public bool WrongButtonPressed;
-    public bool called;
+    //public bool called;
     public GameObject ButtonDown;
     public GameObject ButtonUp;
     public GameObject[] inactiveButtons;
@@ -22,6 +23,11 @@ public class ButtonPuzzleManager : MonoBehaviour
 
     public Animator doorRight;
     public Animator doorLeft;
+    public Animator ItemHolder;
+
+    public GameObject doorSlide;
+
+    public TextMeshProUGUI text;
 
     void Update()
     {
@@ -100,46 +106,49 @@ public class ButtonPuzzleManager : MonoBehaviour
 
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Act Button 1"))
+        if(isComplete == false)
         {
-            Button1Pressed = true;
-            ButtonDown.SetActive(true);
-            Invoke(nameof(DisableAudio), 0.3f);
-            Debug.Log("Button 1 Pressed success.");
-        }
-        if (collider.CompareTag("Act Button 2") && Button1Pressed == true)
-        {
-            Button2Pressed = true;
-            ButtonDown.SetActive(true);
-            Invoke(nameof(DisableAudio), 0.3f);
-            Debug.Log("Button 2 Pressed success.");
-        }
-        if (collider.CompareTag("Act button 3") && Button1Pressed == true && Button2Pressed == true)
-        {
-            Button3Pressed = true;
-            ButtonDown.SetActive(true);
-            Invoke(nameof(DisableAudio), 0.3f);
-            Debug.Log("Button 3 pressed success");
-        }
-        if (collider.CompareTag("Act Button4") && Button1Pressed == true && Button2Pressed == true && Button3Pressed)
-        {
-            Button4Pressed = true;
-            ButtonDown.SetActive(true);
-            Invoke(nameof(DisableAudio), 0.3f);
-            Debug.Log("Button 4 pressed success");
-        }
-        if (collider.CompareTag("Act Button 5") && Button1Pressed == true && Button2Pressed == true && Button3Pressed && Button4Pressed)
-        {
-            Button5Pressed = true;
-            ButtonDown.SetActive(true);
-            Invoke(nameof(DisableAudio), 0.3f);
-            PuzzleComplete();
-        }
-        if (collider.CompareTag("InAct Button") && Button1Pressed)
-        {
-            WrongButtonPressed = true;
-            ResetPuzzle();
-            Debug.Log("Reset");
+            if (collider.CompareTag("Act Button 1"))
+            {
+                Button1Pressed = true;
+                ButtonDown.SetActive(true);
+                Invoke(nameof(DisableAudio), 0.3f);
+                Debug.Log("Button 1 Pressed success.");
+            }
+            if (collider.CompareTag("Act Button 2") && Button1Pressed == true)
+            {
+                Button2Pressed = true;
+                ButtonDown.SetActive(true);
+                Invoke(nameof(DisableAudio), 0.3f);
+                Debug.Log("Button 2 Pressed success.");
+            }
+            if (collider.CompareTag("Act button 3") && Button1Pressed == true && Button2Pressed == true)
+            {
+                Button3Pressed = true;
+                ButtonDown.SetActive(true);
+                Invoke(nameof(DisableAudio), 0.3f);
+                Debug.Log("Button 3 pressed success");
+            }
+            if (collider.CompareTag("Act Button4") && Button1Pressed == true && Button2Pressed == true && Button3Pressed)
+            {
+                Button4Pressed = true;
+                ButtonDown.SetActive(true);
+                Invoke(nameof(DisableAudio), 0.3f);
+                Debug.Log("Button 4 pressed success");
+            }
+            if (collider.CompareTag("Act Button 5") && Button1Pressed == true && Button2Pressed == true && Button3Pressed && Button4Pressed)
+            {
+                Button5Pressed = true;
+                ButtonDown.SetActive(true);
+                Invoke(nameof(DisableAudio), 0.3f);
+                PuzzleComplete();
+            }
+            if (collider.CompareTag("InAct Button") && Button1Pressed)
+            {
+                WrongButtonPressed = true;
+                ResetPuzzle();
+                Debug.Log("Reset");
+            }
         }
     }
 
@@ -160,7 +169,17 @@ public class ButtonPuzzleManager : MonoBehaviour
     {
         Debug.Log("Puzzle Complete!");
         isComplete = true;
+        //called = true;
         doorRight.SetBool("isComplete", true);
         doorLeft.SetBool("isComplete", true);
+        doorSlide.SetActive(true);
+        Invoke(nameof(SetObject), 2f);
+        text.text = ("Puzzles Completed" + " " + " 1/3");
+        ItemHolder.Play("ItemOpen");
+    }
+
+    void SetObject()
+    {
+        doorSlide.SetActive(false);
     }
 }

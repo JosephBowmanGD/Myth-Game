@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PaintingPuzzle : MonoBehaviour
@@ -39,6 +40,7 @@ public class PaintingPuzzle : MonoBehaviour
     public Animator B3Anim;
     public Animator B4Anim;
     public Animator B5Anim;
+    public Animator ItemAnim;
 
     private bool called;
     public bool canPress;
@@ -56,6 +58,13 @@ public class PaintingPuzzle : MonoBehaviour
     public bool canPress4;
     public bool canPress5;
     public bool hasIntereactedWith5; //bug fix//
+
+    public GameObject finalDoors;
+
+    public TextMeshProUGUI text;
+
+    public GameObject doorSlide;
+
     void Start()
     {
         currIndex1 = 0;
@@ -430,5 +439,10 @@ public class PaintingPuzzle : MonoBehaviour
     public void PuzzleCompletion()
     {
         Debug.Log("Puzzle Complete!");
+        finalDoors.SetActive(false);
+        text.text = ("Puzzles Completed" + " " + " 3/3");
+        doorSlide.SetActive(true);
+        ItemAnim.Play("ItemOpen2");
+        
     }
 }
